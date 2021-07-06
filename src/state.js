@@ -12,9 +12,9 @@ export const updateState = (values) => {
     processToggles(values, newState);
     state = newState;
     if (_.isEqual(oldState, newState)) {
-        return state;
+        return {...state, ...{error: "State did not change"}};
     } else {
-        return {state, ...{changes: getChanges()}};
+        return {...state, ...{changes: getChanges()}};
     }
 }
 

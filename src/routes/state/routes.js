@@ -6,6 +6,8 @@ export default (method, params) => {
     if(method === "POST"){
         const automationUrl = getAutomationServer();
         const data = updateState(params);
-        send(automationUrl, data);
+        if(!data.error){
+            send(automationUrl, data);
+        }
     }
 }
