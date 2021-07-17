@@ -1,6 +1,8 @@
 import Koa from "koa";
 import config from "./config/index.js";
 import routes from "./routes/routes.js";
+import pulse from "./time.js";
+
 const app = new Koa();
 
 app.use(async ctx => {
@@ -9,3 +11,5 @@ app.use(async ctx => {
 });
 
 app.listen(config.localport);
+
+pulse();
