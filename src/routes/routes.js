@@ -11,7 +11,7 @@ export default (request, response) => {
 
     switch(path){
         case "/state":
-            res = state(method, params);
+            res = state(method, params, response);
             break;
         case "/actions":
             res = action(method, params);

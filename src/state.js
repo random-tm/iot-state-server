@@ -12,7 +12,7 @@ export const updateState = (values) => {
     processToggles(values, newState);
     state = newState;
     if (_.isEqual(oldState, newState)) {
-        return {...state, ...{error: "State did not change"}};
+        return {...state, ...{status: "State did not change"}};
     } else {
         return {...state, ...{changes: getChanges()}};
     }
@@ -43,4 +43,23 @@ const getChanges = (oldState, newState) => {
         }
     }
     return changes;
+}
+
+export const getStateFiltered = (values) => {
+    if(values && values.length > 0){
+        if(values.query){
+            if(Array.isArray(values.query)){
+                const rawQuery = values.query;
+                const requestedFields = rawQuery.split(",");
+                const selectedKeys = {};
+                for(const field of requestedFields){
+                    selectedKeys[field] = state[field];
+                }
+                return selectedKeys;
+            } else {
+                console.warn("Found query, but was not array");
+            }
+        }
+    }
+    return getState();
 }
