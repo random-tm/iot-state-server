@@ -10,6 +10,7 @@ export default (method, params) => {
             ...{state: getState()},
             ...{action: true}
         }
+        ctx.body = "State updated";
         send(automationUrl, data);
     }
 }

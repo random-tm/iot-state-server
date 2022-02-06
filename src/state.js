@@ -7,14 +7,15 @@ export const getState = () => {
 }
 
 export const updateState = (values) => {
+    const cleanValues = skipKeys(values);
     const oldState = _.cloneDeep(state);
-    const newState = { ...state, ...values };
-    processToggles(values, newState);
+    const newState = { ...state, ...cleanValues };
+    processToggles(cleanValues, newState);
     state = newState;
     if (_.isEqual(oldState, newState)) {
         return {...state, ...{status: "State did not change"}};
     } else {
-        return {...state, ...{changes: getChanges()}};
+        return {...state, ...{changes: getChanges(oldState, newState)}};
     }
 }
 
@@ -32,7 +33,7 @@ const getChanges = (oldState, newState) => {
     const oldKeys = Object.keys(oldState);
     const newKeys = Object.keys(newState);
     const allKeys = _.union(oldKeys, newKeys);
-    for(key of allKeys){
+    for(const key of allKeys){
         const oldVal = oldState[key];
         const newVal = newState[key];
         if(!_.isEqual(oldVal, newVal)){
@@ -43,6 +44,14 @@ const getChanges = (oldState, newState) => {
         }
     }
     return changes;
+}
+
+const skipKeys = (dirtyState) => {
+    const keysToSkip = ["publishKey", "retry", "retryState"];
+    for(const key of keysToSkip){
+        delete dirtyState[key];
+    }
+    return dirtyState;
 }
 
 export const getStateFiltered = (values) => {
