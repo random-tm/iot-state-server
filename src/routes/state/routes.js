@@ -7,7 +7,7 @@ export default (method, params, ctx) => {
         const automationUrl = getAutomationServer();
         const data = updateState(params);
         if(!data.error){
-            send(automationUrl, data);
+            send(automationUrl, {state: data});
         }
         ctx.body = "OK"
     } else if(method == "GET"){
