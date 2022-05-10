@@ -13,7 +13,7 @@ export default (ctx) => {
         case "/state":
             res = state(method, params, ctx);
             break;
-        case "/actions":
+        case "/action":
             res = action(method, params, ctx);
             break;
         default:
