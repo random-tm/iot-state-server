@@ -2,7 +2,7 @@ import getAutomationServer from "../../net/getAutomationServer.js"
 import send from "../../net/send/index.js";
 import { getState } from "../../state.js";
 
-export default (method, params) => {
+export default (method, params, ctx) => {
     if(method === "POST"){
         const automationUrl = getAutomationServer();
         const data = {
