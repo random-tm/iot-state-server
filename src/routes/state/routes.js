@@ -1,3 +1,4 @@
+import internal from "../../internal.js";
 import getAutomationServer from "../../net/getAutomationServer.js";
 import send from "../../net/send/index.js";
 import { getStateFiltered, updateState } from "../../state.js"
@@ -7,7 +8,8 @@ export default (method, params, ctx) => {
         const automationUrl = getAutomationServer();
         const data = updateState(params);
         if(!data.error){
-            send(automationUrl, {state: data});
+            const safeAutomationState = internal(data);
+            send(automationUrl, {state: safeAutomationState});
         }
         ctx.body = "OK"
     } else if(method == "GET"){
