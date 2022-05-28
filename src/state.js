@@ -1,6 +1,7 @@
 import _ from "lodash";
+import config from "./config/index.js";
 
-let state = {};
+let state = config.state;
 
 export const getState = () => {
     return state;
