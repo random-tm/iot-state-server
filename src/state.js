@@ -56,11 +56,10 @@ const skipKeys = (dirtyState) => {
 }
 
 export const getStateFiltered = (values) => {
-    if(values && values.length > 0){
+    if(values){
         if(values.query){
             if(Array.isArray(values.query)){
-                const rawQuery = values.query;
-                const requestedFields = rawQuery.split(",");
+                const requestedFields = values.query;
                 const selectedKeys = {};
                 for(const field of requestedFields){
                     selectedKeys[field] = state[field];
