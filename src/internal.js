@@ -8,7 +8,7 @@ export default (state) => {
 }
 
 const clearInternals = (state) => {
-    for(const key of state){
+    for(const key in state){
         if(key.indexOf("internal_") != -1){
             delete state[key];
         }
