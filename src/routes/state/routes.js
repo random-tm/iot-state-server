@@ -14,7 +14,7 @@ export default (method, params, ctx) => {
             }
         }
         ctx.body = "OK"
-    } else if(method == "GET"){
+    } else if(method === "GET"){
         const state = getStateFiltered(params);
         ctx.body = state;
     }

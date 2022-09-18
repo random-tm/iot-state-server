@@ -1,9 +1,10 @@
-import QueryString from "query-string";
+import getParams from "../net/getParams.js";
 import action from "./actions/routes.js";
 import state from "./state/routes.js";
 
 export default (ctx) => {
-    const params = ctx.request.body;
+
+    const params = getParams(ctx);
     const path = ctx.request.path;
     const method = ctx.request.method;
 
