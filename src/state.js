@@ -62,6 +62,9 @@ export const getStateFiltered = (values) => {
                 const requestedFields = values.query;
                 const selectedKeys = {};
                 for(const field of requestedFields){
+                    if(requestedFields.length == 1){
+                        return state[field];
+                    }
                     selectedKeys[field] = state[field];
                 }
                 return selectedKeys;
