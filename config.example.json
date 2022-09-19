@@ -3,8 +3,9 @@
         "ip": "127.0.0.1",
         "port": 6000
     },
-    "state": {
-        "day_night": "night"
+    "backupstate": {
+        "ip": "127.0.0.1",
+        "port": 10000
     },
     "localport": 8000
 }
