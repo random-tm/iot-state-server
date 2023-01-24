@@ -2,6 +2,7 @@ import _ from "lodash";
 import config from "./config/index.js";
 
 let state = config.state;
+let stateChangeTimes = {};
 
 export const getState = () => {
     return state;
@@ -11,13 +12,30 @@ export const updateState = (values) => {
     const cleanValues = skipKeys(values);
     const oldState = _.cloneDeep(state);
     const newState = { ...state, ...cleanValues };
+    getChangedKeys(oldState, newState);
     processToggles(cleanValues, newState);
     state = newState;
     if (_.isEqual(oldState, newState)) {
         return {...state, ...{status: "State did not change"}};
     } else {
-        return {...state, ...{changes: getChanges(oldState, newState)}};
+        return {...state, ...{changes: getChanges(oldState, newState)}, ...{timestamps: stateChangeTimes}};
     }
+}
+
+const getChangedKeys = (oldState, newState) => {
+    const oldStateKeys = Object.keys(oldState);
+    const newStateKeys = Object.keys(newState);
+    const allKeys = _.union(oldStateKeys, newStateKeys);
+    const changeTimestamps = {};
+    const keyChangeTime = Date.now();
+    for(const key of allKeys){
+        const oldKeyValue = oldState[key];
+        const newKeyValue = newState[key];
+        if(oldKeyValue != newKeyValue){
+            changeTimestamps[key] = keyChangeTime;
+        }
+    }
+    stateChangeTimes = {...stateChangeTimes, ...changeTimestamps};
 }
 
 const processToggles = (values, newState) => {
