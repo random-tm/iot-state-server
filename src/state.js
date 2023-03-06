@@ -18,7 +18,8 @@ export const updateState = (values) => {
     if (_.isEqual(oldState, newState)) {
         return {...state, ...{status: "State did not change"}};
     } else {
-        return {...state, ...{changes: getChanges(oldState, newState)}, ...{timestamps: stateChangeTimes}};
+        const timestamps = {timestamps: {...state.timestamps, ...stateChangeTimes}};
+        return {...state, ...{changes: getChanges(oldState, newState)}, ...timestamps};
     }
 }
 
