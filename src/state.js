@@ -2,7 +2,7 @@ import _ from "lodash";
 import config from "./config/index.js";
 
 let state = config.state;
-let stateChangeTimes = {};
+let stateChangeTimes = state.timestamps;
 
 export const getState = () => {
     return state;
@@ -14,12 +14,12 @@ export const updateState = (values) => {
     const newState = { ...state, ...cleanValues };
     getChangedKeys(oldState, newState);
     processToggles(cleanValues, newState);
-    state = newState;
+    const timestamps = {timestamps: {...state.timestamps, ...stateChangeTimes}};
+    state = {...newState, ...timestamps};
     if (_.isEqual(oldState, newState)) {
         return {...state, ...{status: "State did not change"}};
     } else {
-        const timestamps = {timestamps: {...state.timestamps, ...stateChangeTimes}};
-        return {...state, ...{changes: getChanges(oldState, newState)}, ...timestamps};
+        return {...state, ...{changes: getChanges(oldState, newState)}};
     }
 }
 
